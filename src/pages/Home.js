@@ -1,10 +1,14 @@
 // Home.js
 import React from 'react';
-
-const Home= () => {
+import '../App.css';
+import { Outlet } from 'react-router-dom';
+const Home= ({navBar}) => {
   return (
     <div>
-      <h2 style={{color: 'black'}}>Home Page</h2>
+      {navBar.render()}
+      <div className='sub-page'>
+      <Outlet/>
+      </div>
       {/* Add content for the home page */}
     </div>
   );

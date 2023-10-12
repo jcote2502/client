@@ -1,6 +1,6 @@
-.content-container {
+.sub-page {
     position: fixed;
-    top: 39px;
+    top: 65px;
     left: 0;
     right: 0;/* Adjust this value as needed to create space below the NavBar */ /* Add padding as desired */
   };
