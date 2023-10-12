@@ -1,0 +1,48 @@
+
+/* App.css (or your custom CSS file) */
+.App {
+    font-family: Arial, sans-serif;
+    /* Add other global styles here */
+  }
+  
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333; /* Set the background color you desire */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .navbar > * {
+    margin: 0 10px;
+  }
+  
+  .search-bar input {
+    width: 200px;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .user-controls {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-controls button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin: 0 10px;
+  }
+  
+  .user-info span {
+    margin: 0 10px;
+  }

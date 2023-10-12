@@ -1,24 +1,23 @@
-import logo from './logo.svg';
 import './App.css';
-
+import NavBar from './components/NavBar';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import Account from './pages/Account';
+import Signup from './pages/SignUp';
 function App() {
+  // need to track if user is signed in or not to update nav bar
+  const state = false;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <NavBar isSignedIn={state} />
+      <div className='content-container'>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/account' element={<Account />} />
+          <Route path='/signup' element={<Signup />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
