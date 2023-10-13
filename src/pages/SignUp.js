@@ -13,7 +13,7 @@ import Container from '@mui/material/Container';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      <Link color="inherit" to="http://localhost:3000">
+      <Link color="inherit" to="http://localhost:3000/home/search">
         FanGearHome
       </Link>{' '}
       {new Date().getFullYear()}

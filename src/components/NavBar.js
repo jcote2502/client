@@ -18,7 +18,7 @@ class NavBar extends React.Component {
         return (
             <nav className="navbar">
                 <img className="logo" src={logo} alt="Logo" />
-                <div className="title">331w NFL FanGearShop</div>
+                <div className="title">431w NFL FanGearShop</div>
                 {
                     this.isSignedIn ?
                         <div className="user-info">

@@ -1,0 +1,36 @@
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 66px;
+    width: 275px; /* Adjust this value as needed */
+    height: 100%;
+    background-color: #f2f2f2; /* Background color for the sidebar */
+    transition: width 0.3s; /* Smooth transition effect for collapse/expand */
+    overflow-y: auto; /* Add scrollbars if content exceeds the height */
+    border-right: 1px solid #ccc; /* Optional border on the right side */
+  }
+  
+  /* Styles for collapsed sidebar */
+  .sidebar.collapsed {
+    width: 60px; /* Adjust the collapsed width as needed */
+  }
+  
+  /* Button to collapse/expand the sidebar */
+  .collapse-button {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #333; /* Button background color */
+    color: white; /* Button text color */
+    text-align: center;
+  }
+  
+  /* Filter sections within the sidebar */
+  .filter-section {
+    padding: 10px;
+    border-bottom: 1px solid #ccc; /* Optional border between sections */
+  }
+
+  .sidebar.collapsed .filter-section {
+    display: none;
+  }
