@@ -1,10 +1,11 @@
 import React from 'react';
 import SideBar from '../components/SideBar';
+import ProductFrame from '../components/ProductFrame';
 const Search= () => {
   return (
     <div>
       <SideBar />
-      <h2 style={{color: 'black'}}>Home Page/Search</h2>
+      <ProductFrame />
       {/* Add content for the home page */}
     </div>
   );
