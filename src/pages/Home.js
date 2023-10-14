@@ -2,6 +2,7 @@
 import React from 'react';
 import '../App.css';
 import { Outlet } from 'react-router-dom';
+import SideBar from '../components/SideBar';
 const Home= ({navBar}) => {
   return (
     <div>
@@ -9,7 +10,6 @@ const Home= ({navBar}) => {
       <div className='sub-page'>
       <Outlet/>
       </div>
-      {/* Add content for the home page */}
     </div>
   );
 }

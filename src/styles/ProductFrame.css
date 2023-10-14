@@ -3,6 +3,7 @@
     top: 65px;
     left: 275px;
     right: 0;
+    height: calc(100vh - 65px);
     overflow-y: auto; /* To enable scrolling if content overflows */
     align-items: center;
     

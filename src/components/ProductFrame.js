@@ -1,156 +1,8 @@
 import React from 'react';
 import '../styles/ProductFrame.css'
-import logo from '../assets/images/nfl.svg';
-// Define your product data. You can fetch this data from an API.
-const products = [
-    {
-        id: 1,
-        image: logo,
-        gender: 'mens',
-        playerName: 'Kelce',
-        productType: 'Jersy',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 2,
-        image: logo,
-        gender: 'womens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 1,
-        image: logo,
-        gender: 'mens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 1,
-        image: logo,
-        gender: 'mens',
-        playerName: 'Kelce',
-        productType: 'Jersy',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 2,
-        image: logo,
-        gender: 'womens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 1,
-        image: logo,
-        gender: 'mens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 1,
-        image: logo,
-        gender: 'mens',
-        playerName: 'Kelce',
-        productType: 'Jersy',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 2,
-        image: logo,
-        gender: 'womens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 1,
-        image: logo,
-        gender: 'mens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 1,
-        image: logo,
-        gender: 'mens',
-        playerName: 'Kelce',
-        productType: 'Jersy',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 2,
-        image: logo,
-        gender: 'womens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 1,
-        image: logo,
-        gender: 'mens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 1,
-        image: logo,
-        gender: 'mens',
-        playerName: 'Kelce',
-        productType: 'Jersy',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 2,
-        image: logo,
-        gender: 'womens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 1,
-        image: logo,
-        gender: 'mens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 1,
-        image: logo,
-        gender: 'mens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    // Add more product data as needed
-];
 
-const ProductFrame = () => {
+
+const ProductFrame = ({products}) => {
     return (
         <div className="sub-page">
             <div className="product-items">
@@ -160,7 +12,7 @@ const ProductFrame = () => {
                             <img
                                 src={product.image}
                                 alt="Product"
-                                onClick={() => this.navigateToProduct(product.id)}
+                                onClick={() => navigateToProduct(product.id)}
                             />
                         </div>
                         <div className="product-details">

@@ -1,8 +1,9 @@
 import React from "react";
 import '../styles/SideBar.css'
 class SideBar extends React.Component {
-    constructor() {
+    constructor(callbackQuery) {
         super();
+        this.callbackQuery = callbackQuery;
         this.state = {
             expanded: true,
             view: 'product',
@@ -32,6 +33,12 @@ class SideBar extends React.Component {
             'product',
             'account',
         ]
+    }
+
+    // handle any kind of filter update
+    handleRequestQuery = () => {
+        this.callbackQuery()
+        console.log('Callback function complete');
     }
 
     // handles viewChange
