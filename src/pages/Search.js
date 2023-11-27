@@ -1,158 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SideBar from '../components/SideBar';
 import ProductFrame from '../components/ProductFrame';
 import logo from '../assets/images/nfl.svg';
+import  Axios  from 'axios';
+import '../styles/ProductFrame.css'
 // Define your product data. You can fetch this data from an API.
-const temp_prods = [
-    {
+const temp_prods = {
+    product:
+    [
+        {
         id: 1,
-        image: logo,
-        gender: 'mens',
-        playerName: 'Kelce',
-        productType: 'Jersy',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 2,
-        image: logo,
-        gender: 'womens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 3,
-        image: logo,
-        gender: 'mens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 4,
-        image: logo,
-        gender: 'mens',
-        playerName: 'Kelce',
-        productType: 'Jersy',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 5,
-        image: logo,
-        gender: 'womens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 6,
-        image: logo,
-        gender: 'mens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 7,
-        image: logo,
-        gender: 'mens',
-        playerName: 'Kelce',
-        productType: 'Jersy',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 8,
-        image: logo,
-        gender: 'womens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 9,
-        image: logo,
-        gender: 'mens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 10,
-        image: logo,
-        gender: 'mens',
-        playerName: 'Kelce',
-        productType: 'Jersy',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 11,
-        image: logo,
-        gender: 'womens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 12,
-        image: logo,
-        gender: 'mens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 13,
-        image: logo,
-        gender: 'mens',
-        playerName: 'Kelce',
-        productType: 'Jersy',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 14,
-        image: logo,
-        gender: 'womens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 15,
-        image: logo,
-        gender: 'mens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    {
-        id: 16,
-        image: logo,
-        gender: 'mens',
-        playerName: '',
-        productType: 'Shirt',
-        price: '$50',
-        inStock: true,
-    },
-    // Add more product data as needed
-];
-const Search= () => {
-  const [products, setProducts] = useState(temp_prods);
+        // image: 'http'
+        gender: null,
+        player: null,
+        Price: null,
+        fname: null,
+        lname: null
+        }
+    ]
+}
+const WEBFRAME = () => {
+  const [productsInView, setProducts] = useState(temp_prods);
+  const loadProducts = async () => {
+    try{
+        const response = await Axios.get('http://localhost:3004/db/jerseys');
+        setProducts(response.data);
+    }catch (error){
+        console.error('Error Fetching products:',error);
+    }
+  }
 
+  useEffect(()=>{
+    loadProducts();
+  }, []);
   function queryWithFilter (data){
     // contact DB
     // data represents what boxes are selected to sort and filter 
@@ -160,13 +40,50 @@ const Search= () => {
     // use setProducts to update product list whenever new filter is selected
   }
 
+  function navigateToProduct (id){
+
+  }
+
+
   return (
     <div>
       <SideBar callbackQuery={queryWithFilter} />
-      <ProductFrame products={products} />
+      
+      {/* product frame */}
+      <div className="sub-page">
+            <div className="product-items">
+                {productsInView.product.map((product) => (
+                    <div key={product.product_ID || product.id} className="product-item">
+                        <div className="product-image">
+                            <img
+                                src={product.image}
+                                alt="Product"
+                                onClick={() => navigateToProduct(product.id)}
+                            />
+                        </div>
+                        <div className="product-details">
+                            <div className="product-row">
+                                {product.gender + ', ' }
+                            </div>
+                            <div className='product-row'>
+                                {product.fname ? product.fname + '\n' : null}
+                                {product.lname ? product.lname +  ',    ' : null}
+                            </div>
+                            <div className='product-row'>
+                                {product.title}
+                            </div>
+                            <div className="product-row">
+                                {product.size}
+                                <h4>${product.Price}</h4>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
       {/* Add content for the home page */}
     </div>
   );
 }
 
-export default Search;
+export default WEBFRAME;

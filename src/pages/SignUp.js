@@ -2,18 +2,19 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Axios from 'axios';
 
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      <Link color="inherit" to="http://localhost:3000/home/search">
+      <Link color="inherit" to="http://localhost:3000/home/webframe">
         FanGearHome
       </Link>{' '}
       {new Date().getFullYear()}
@@ -23,13 +24,27 @@ function Copyright(props) {
 }
 
 export default function SignUp({navbar}) {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const { email, firstName, lastName, password } = event.currentTarget;
+
+    // Capitalize
+    const fname = firstName.value.charAt(0).toUpperCase()+firstName.value.slice(1);
+    const lname = lastName.value.charAt(0).toUpperCase()+lastName.value.slice(1);
+    try {
+      const response = await Axios.post('http://localhost:3004/db/registeruser', {
+        email: email.value,
+        fname: fname,
+        lname: lname,
+        password: password.value
+      });
+      console.log('Success:',response.data);
+      navbar.handleSignup(response.data.userID,fname);
+      navigate('/home/webframe');
+    }catch (error){
+      console.error('Error:', error);
+    }
   };
 
   return (

@@ -2,12 +2,13 @@ import React from 'react';
 import '../styles/ProductFrame.css'
 
 
-const ProductFrame = ({products}) => {
+const ProductFrame = ({products,test}) => {
+
     return (
         <div className="sub-page">
             <div className="product-items">
                 {products.map((product) => (
-                    <div key={product.id} className="product-item">
+                    <div key={product.product_ID} className="product-item">
                         <div className="product-image">
                             <img
                                 src={product.image}

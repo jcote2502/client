@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Account from './pages/Account';
 import Signup from './pages/SignUp';
-import Search from './pages/Search';
+import WEBFRAME from './pages/Search';
 import Login from './pages/Login';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Welcome from './pages/Welcome';
@@ -20,9 +20,9 @@ function App() {
             {/* set up welcome page route for '/' */}
             <Route path='/' element={<Welcome />} />
             <Route path="home" element={<Home navBar={navBar} />}>
-              <Route index element={<Search />} />
+              <Route index element={<WEBFRAME />} />
               <Route path='account' element={<Account />} />
-              <Route path='search' element={<Search />} />
+              <Route path='webframe' element={<WEBFRAME />} />
             </Route>
             <Route path='login' element={<Login navbar={navBar} />} />
             <Route path='signUp' element={<Signup navbar={navBar} />} >
