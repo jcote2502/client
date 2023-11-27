@@ -3,6 +3,7 @@ import NavBar from './components/NavBar';
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Account from './pages/Account';
+import Cart from './pages/Cart';
 import Signup from './pages/SignUp';
 import WEBFRAME from './pages/Search';
 import Login from './pages/Login';
@@ -21,7 +22,8 @@ function App() {
             <Route path='/' element={<Welcome />} />
             <Route path="home" element={<Home navBar={navBar} />}>
               <Route index element={<WEBFRAME />} />
-              <Route path='account' element={<Account />} />
+              <Route path='account' element={<Account navbar={navBar}/>} />
+              <Route path='cart' element={<Cart />} />
               <Route path='webframe' element={<WEBFRAME />} />
             </Route>
             <Route path='login' element={<Login navbar={navBar} />} />

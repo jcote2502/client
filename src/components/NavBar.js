@@ -17,6 +17,12 @@ class NavBar extends React.Component {
         this.fname = fname;
     };
 
+    getUid = () => {
+        return this.uid
+    }
+    
+
+
     render() {
         console.log(this.fname);
         console.log(this.isSignedIn);
@@ -28,8 +34,8 @@ class NavBar extends React.Component {
                     this.isSignedIn ?
                         <div className="user-info">
                             <span>Hello {this.fname}!</span>
-                            <span><img className="logo" src={cartIcon} alt="cart_icon"/></span>
-                            <span><img className="logo" src={profileIcon} alt="account_icon"/></span>
+                            <span><CartButton/></span>
+                            <span><AccountButton/></span>
                         </div>
                         :
                         <div className="user-controls">
@@ -39,6 +45,24 @@ class NavBar extends React.Component {
             </nav>
         );
     }
+}
+function CartButton() {
+    const navigate = useNavigate();
+    const goToCart=()=>{
+        navigate("cart");
+    }
+    return (
+        <img className="logo" onClick={()=>goToCart()} src={cartIcon}/>
+    );
+}
+function AccountButton() {
+    const navigate = useNavigate();
+    const goToAccount=()=>{
+        navigate("account");
+    }
+    return (
+        <img className="logo" onClick={()=>goToAccount()} src={profileIcon}/>
+    );
 }
 function Navigation() {
     const navigate = useNavigate();
