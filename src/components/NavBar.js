@@ -4,6 +4,12 @@ import { useNavigate } from "react-router-dom";
 import logo from '../assets/images/nfl.svg';
 import profileIcon from '../assets/images/profile.svg';
 import cartIcon from '../assets/images/cart.svg';
+
+// AUTHOR: Justin Cote
+// NAVBAR
+// Provides user with ability to navigate website
+// State changes upon login
+
 class NavBar extends React.Component {
     constructor() {
         super();
@@ -11,7 +17,7 @@ class NavBar extends React.Component {
         this.fname = null;
         this.uid = null;
     }
-    handleSignup = async (uid,fname) => {
+    handleSignup = async (uid, fname) => {
         this.isSignedIn = true;
         this.uid = uid;
         this.fname = fname;
@@ -20,22 +26,20 @@ class NavBar extends React.Component {
     getUid = () => {
         return this.uid
     }
-    
-
 
     render() {
         console.log(this.fname);
         console.log(this.isSignedIn);
         return (
             <nav className="navbar">
-                <img className="logo" src={logo} alt="Logo" />
+                <HomeButton />
                 <div className="title">431w NFL FanGearShop</div>
                 {
                     this.isSignedIn ?
                         <div className="user-info">
                             <span>Hello {this.fname}!</span>
-                            <span><CartButton/></span>
-                            <span><AccountButton/></span>
+                            <span><CartButton /></span>
+                            <span><AccountButton /></span>
                         </div>
                         :
                         <div className="user-controls">
@@ -46,22 +50,31 @@ class NavBar extends React.Component {
         );
     }
 }
+function HomeButton() {
+    const navigate = useNavigate();
+    const goToHome = () => {
+        navigate("/home");
+    }
+    return (
+        <img className="logo" onClick={()=>goToHome()} src={logo} alt="Logo" />
+        )
+}
 function CartButton() {
     const navigate = useNavigate();
-    const goToCart=()=>{
+    const goToCart = () => {
         navigate("cart");
     }
     return (
-        <img className="logo" onClick={()=>goToCart()} src={cartIcon}/>
+        <img className="logo" onClick={() => goToCart()} src={cartIcon} />
     );
 }
 function AccountButton() {
     const navigate = useNavigate();
-    const goToAccount=()=>{
+    const goToAccount = () => {
         navigate("account");
     }
     return (
-        <img className="logo" onClick={()=>goToAccount()} src={profileIcon}/>
+        <img className="logo" onClick={() => goToAccount()} src={profileIcon} />
     );
 }
 function Navigation() {

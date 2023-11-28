@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
+
+// AUTHOR(s): Justin Cote , Liam Garrett
+// ACCOUNT PAGE
+// displays information about the users account
+// previous transactions, refunded items, user info 
+
 const Account = ({ navbar }) => {
   const init_state = {
     user_ID: null,

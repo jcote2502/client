@@ -8,7 +8,12 @@ import shortIcon from '../assets/images/shorts.jpeg';
 import sneakerIcon from '../assets/images/sneaker.png';
 import Axios from 'axios';
 import '../styles/ProductFrame.css'
-// Define your product data. You can fetch this data from an API.
+
+// AUTHOR(s): Justin Cote
+// HOME VIEW
+// Provides the landing page of the website
+// This is where a user can view and search for products
+
 const iconSelect = {
     'jersey': jerseyIcon
 }
@@ -22,12 +27,14 @@ const temp_prods = {
                 player: null,
                 Price: null,
                 fname: null,
-                lname: null
+                lname: null,
+                color: null
             }
         ]
 }
 const WEBFRAME = () => {
     const [productsInView, setProducts] = useState(temp_prods);
+    const [productView, setProductView] = useState(false);
     const loadProducts = async () => {
         try {
             const response = await Axios.get('http://localhost:3004/db/jerseys');
@@ -51,11 +58,9 @@ const WEBFRAME = () => {
 
     }
 
-
     return (
         <div>
             <SideBar callbackQuery={queryWithFilter} />
-
             {/* product frame */}
             <div className="sub-page">
                 <div className="product-items">
@@ -79,20 +84,17 @@ const WEBFRAME = () => {
                                 </div>
                                 <div className='product-row'>
                                     {product.title}
+                                    {', '}
+                                    {product.color}
                                 </div>
                                 <div className='product-row'>
                                     <b>${product.Price}</b>
                                 </div>
-                                {/* <div className="product-row">
-                                {product.size}
-                                <h4>${product.Price}</h4>
-                            </div> */}
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
-            {/* Add content for the home page */}
         </div>
     );
 }

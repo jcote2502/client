@@ -9,8 +9,12 @@ import WEBFRAME from './pages/Search';
 import Login from './pages/Login';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Welcome from './pages/Welcome';
-function App() {
 
+// CREATES ROUTES FOR PAGES 
+// SETS UP REDUX IN CASE
+// USES DEFAULT THEME PROVIDER
+
+function App() {
   const defaultTheme = createTheme();
   const navBar = new NavBar();
  

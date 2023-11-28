@@ -44,14 +44,15 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding-bottom: 10px;
+    width: 145px;
+    padding-right: 30px;
   }
 
   .product-row {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-evenly;
   }
   
   /* CSS for labels (gender, playerName, productType) */

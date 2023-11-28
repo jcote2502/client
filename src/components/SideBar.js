@@ -1,5 +1,11 @@
 import React from "react";
 import '../styles/SideBar.css'
+
+
+// AUTHOR: Justin Cote
+// SIDEBAR COMPONENT
+// controls the sidebar and search filters for product view
+
 class SideBar extends React.Component {
     constructor(callbackQuery) {
         super();
@@ -27,8 +33,6 @@ class SideBar extends React.Component {
                 quantity: null,
             }
         };
-
-
         this.views = [
             'product',
             'account',
@@ -44,6 +48,7 @@ class SideBar extends React.Component {
     // handles viewChange
     handleViewChange = (newView) => { this.setState({ view: { newView } }); }
 
+    // toggles sidebar
     toggleSideBar = () => {
         this.setState((prevState) => ({
             expanded: !prevState.expanded,
@@ -177,6 +182,7 @@ class SideBar extends React.Component {
     }
 }
 
+// checkbox object used in render
 const Checkbox = ({ label, value, id, onChange }) => {
 
     return (
