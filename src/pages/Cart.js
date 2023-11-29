@@ -1,86 +1,102 @@
-import React , {useState} from 'react';
-import jerseyIcon from '../assets/images/jersey.jpeg';
-import joggersIcon from '../assets/images/joggers.jpeg';
-import sandalIcon from '../assets/images/sandal.png';
-import shirtIcon from '../assets/images/shirt.png';
-import shortIcon from '../assets/images/shorts.jpeg';
-import sneakerIcon from '../assets/images/sneaker.png';
+import React, { useEffect, useState } from 'react';
+import myIcons from '../MyIcons';
 import '../styles/Cart.css';
-
+import { useNavigate } from 'react-router-dom';
+import cart from '../utils/Cart';
+import user from '../utils/User';
 // AUTHOR(s): Justin Cote, Liam Garrett
 // Displays all items currently in cart
 // Used to checkout, remove items , or clear cart
 
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([
-    // Sample cart items, replace with your actual data
-    { id: 1, name: 'Product 1', size: 'M', price: 20, color: 'Blue', details: 'Lorem ipsum', img:jerseyIcon},
-    { id: 2, name: 'Product 2', size: 'L', price: 30, color: 'Red', details: 'Lorem ipsum',img:joggersIcon },
-    { id: 2, name: 'Product 2', size: 'L', price: 30, color: 'Red', details: 'Lorem ipsum',img:joggersIcon },
-    { id: 2, name: 'Product 2', size: 'L', price: 30, color: 'Red', details: 'Lorem ipsum',img:joggersIcon },
-    { id: 2, name: 'Product 2', size: 'L', price: 30, color: 'Red', details: 'Lorem ipsum',img:joggersIcon },
-    { id: 2, name: 'Product 2', size: 'L', price: 30, color: 'Red', details: 'Lorem ipsum',img:joggersIcon },
-    { id: 2, name: 'Product 2', size: 'L', price: 30, color: 'Red', details: 'Lorem ipsum',img:joggersIcon },
-    { id: 2, name: 'Product 2', size: 'L', price: 30, color: 'Red', details: 'Lorem ipsum',img:joggersIcon },
-    { id: 2, name: 'Product 2', size: 'L', price: 30, color: 'Red', details: 'Lorem ipsum',img:joggersIcon },
-    { id: 2, name: 'Product 2', size: 'L', price: 30, color: 'Red', details: 'Lorem ipsum',img:joggersIcon },
-    { id: 2, name: 'Product 2', size: 'L', price: 30, color: 'Red', details: 'Lorem ipsum',img:joggersIcon },
-    { id: 2, name: 'Product 2', size: 'L', price: 30, color: 'Red', details: 'Lorem ipsum',img:joggersIcon },
-    { id: 2, name: 'Product 2', size: 'L', price: 30, color: 'Red', details: 'Lorem ipsum',img:joggersIcon },
-    { id: 2, name: 'Product 2', size: 'L', price: 30, color: 'Red', details: 'Lorem ipsum',img:joggersIcon },
-  ]);
+  const navigate = useNavigate();
+  const [cartItems, setCartItems] = useState([]);
 
+  const loadCart = async () => {
+    const response = await cart.getCart(user.user_ID);
+    if (response.status) {
+      console.log(cart.items);
+      setCartItems(cart.items);
+    } else {
+      console.error('Error Fetching Cart:', response.error);
+    }
+  }
+
+  useEffect(() => {
+    loadCart();
+  }, []);
+
+  // Navigates to Product View
   const handleContainerClick = (productId) => {
-    // Implement navigation to product page
-    console.log(`Go to product page with ID: ${productId}`);
+    navigate('/home/product')
   };
 
-  const handleRemoveItemClick = (productId) => {
-    // Implement the logic to remove item from the cart (send a POST request to the backend)
-    console.log(`Remove item with ID: ${productId}`);
+  // Removes Item From Cart
+  const handleRemoveItemClick = async (cartID) => {
+    const response = await cart.removeItem(cartID);
+    if (response.status) {
+      loadCart();
+    } else {
+      console.error('Error Removing Item:', response.error);
+    }
   };
 
+  // Calculates Price to Display
   const calculateTotalPrice = () => {
-    // Calculate total price based on cart items
-    return cartItems.reduce((total, item) => total + item.price, 0);
+    return cartItems.reduce((total, item) => total + parseFloat(item.Price), 0).toFixed(2);
   };
 
-  const handleCheckoutClick = () => {
-    // Implement checkout logic
-    console.log('Proceed to checkout');
+  // Handles Purchasing Cart
+  const handleCheckoutClick = async () => {
+    const response = await cart.purchaseCart(user.user_ID);
+    if (response.status) {
+      console.log('Successfully Purchased');
+      const clearCart = await cart.clearCart(user.user_ID);
+      if (clearCart.status) {
+        alert('Purchase Successful!');
+        loadCart();
+        console.log('Purchase Successful!');
+      }
+    } else {
+      console.error('Error Purchasing Cart:', response.error);
+    }
   };
 
-  const handleClearCartClick = () => {
-    // Implement clear cart logic
-    console.log('Clear cart');
+  // Handles Clearing Cart
+  const handleClearCartClick = async () => {
+    const response = await cart.clearCart(user.user_ID);
+    if (response.status){
+      loadCart();
+    }else{
+      console.error('Error Clearing Cart:',response.error);
+    }
   };
 
   return (
     <div className="cart-container">
       <div className="product-list">
         {cartItems.map((item) => (
-          <div key={item.id} className="product-container" onClick={() => handleContainerClick(item.id)}>
-            <img className="product-image" src={item.img} alt={item.name} />
-            <div className="product-details">
-              <h3>{item.name}</h3>
-              <p>{`Size: ${item.size} | Price: $${item.price} | Color: ${item.color}`}</p>
-              <p>{item.details}</p>
+          <div key={item.cart_ID}>
+            <div className="product-container" onClick={() => handleContainerClick(item.product_ID)}>
+              <img className="product-image" src={item.img} alt={item.title} />
+              <div className="product-details">
+                <h3>{item.name}</h3>
+                <p>{`Size: ${item.size} | Price: $${item.Price} | Color: ${item.color}`}</p>
+                <p>{item.details}</p>
+              </div>
             </div>
-            <button className="remove-item" onClick={() => handleRemoveItemClick(item.id)}>
-              X
-            </button>
+            <button className="remove-item" onClick={() => handleRemoveItemClick(item.cart_ID)}>X</button>
           </div>
         ))}
       </div>
-
       <div className="cart-summary">
         <div className="total">Total: ${calculateTotalPrice()}</div>
         <div className="buttons">
-          <button className="checkout-button" onClick={handleCheckoutClick}>
+          <button className="checkout-button" onClick={() => handleCheckoutClick()}>
             Checkout
           </button>
-          <button className="clear-cart-button" onClick={handleClearCartClick}>
+          <button className="clear-cart-button" onClick={() => handleClearCartClick()}>
             Clear Cart
           </button>
         </div>

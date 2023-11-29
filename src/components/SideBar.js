@@ -1,5 +1,6 @@
 import React from "react";
 import '../styles/SideBar.css'
+import { TextField } from "@mui/material";
 
 
 // AUTHOR: Justin Cote
@@ -30,7 +31,6 @@ class SideBar extends React.Component {
                     female: false,
                 },
                 price: null,
-                quantity: null,
             }
         };
         this.views = [
@@ -75,10 +75,6 @@ class SideBar extends React.Component {
         this.setState({ filters: { ...this.state.filters, price: event.target.value } });
     };
 
-    // Handles quantity slider change
-    handleQuantityChange = (event) => {
-        this.setState({ filters: { ...this.state.filters, quantity: event.target.value } });
-    };
 
     // Renders Element
     render() {
@@ -93,7 +89,17 @@ class SideBar extends React.Component {
                 {/* if expanded and view is selected for product filters */}
                 {this.state.view === 'product' && expanded && (
                     <div className="filters">
-
+                        
+                        {/* Search Bar */}
+                        <div style={{padding:"10px"}}>
+                            <TextField 
+                            id="searchBar"
+                            label="search"
+                            fullWidth
+                            name="searchBar"
+                            />
+                        </div>
+                        <button style={{marginLeft:"100px"}}>Search</button>
                         {/* Product Filter */}
                         <div className="filter-section">
                             <h3>Product Type:</h3>
@@ -163,18 +169,6 @@ class SideBar extends React.Component {
                             </select>
                         </div>
 
-                        <div className="filter-section">
-                            <h3>Quantity:</h3>
-                            <input
-                                id = 'quantity'
-                                type="range"
-                                min="0"
-                                max="20000"
-                                value={filters.quantity || ''}
-                                onChange={this.handleQuantityChange}
-                            />
-                            <p>Quantity: {filters.quantity}</p>
-                        </div>
                     </div>
                 )}
             </div>

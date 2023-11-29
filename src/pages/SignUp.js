@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Axios from 'axios';
+import user from '../utils/User';
 
 
 function Copyright(props) {
@@ -28,22 +29,13 @@ export default function SignUp({navbar}) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { email, firstName, lastName, password } = event.currentTarget;
-
-    // Capitalize
-    const fname = firstName.value.charAt(0).toUpperCase()+firstName.value.slice(1);
-    const lname = lastName.value.charAt(0).toUpperCase()+lastName.value.slice(1);
-    try {
-      const response = await Axios.post('http://localhost:3004/db/registeruser', {
-        email: email.value,
-        fname: fname,
-        lname: lname,
-        password: password.value
-      });
-      console.log('Success:',response.data);
-      navbar.handleSignup(response.data.userID,fname);
+    const response = await user.createUser(email.value,firstName.value,
+      lastName.value, password.value);
+    if (response.status){
+      navbar.handleLogin(user.user.fname);
       navigate('/home/webframe');
-    }catch (error){
-      console.error('Error:', error);
+    }else{
+      console.error('Error Creating Account:',response.error);
     }
   };
 

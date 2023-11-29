@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Axios from 'axios';
+import user from '../utils/User';
 
 
 function Copyright(props) {
@@ -33,20 +34,13 @@ export default function Login({navbar}) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const {email, password} = event.currentTarget;
-    try {
-      console.log(email.value, password.value);
-      const response = await Axios.get('http://localhost:3004/db/authentication',{
-        params:{
-          email:email.value,
-          password:password.value
-        }
-      });
-      // store ID in redux
-      navbar.handleSignup(response.data.userId,response.data.fname);
+    const response = await user.login(email.value, password.value);
+    if (response.status) {
+      navbar.handleLogin(user.user.fname);
       navigate('/home/webframe');
-      // navigate back to webframe
-    } catch (error) {
-      console.log('Error:',error);
+    }else{
+      console.error('Error Loggin In:',response.error);
+      alert(response.error);
     }
   };
 

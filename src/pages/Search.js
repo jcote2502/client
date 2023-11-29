@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import SideBar from '../components/SideBar';
-import jerseyIcon from '../assets/images/jersey.jpeg';
-import joggersIcon from '../assets/images/joggers.jpeg';
-import sandalIcon from '../assets/images/sandal.png';
-import shirtIcon from '../assets/images/shirt.png';
-import shortIcon from '../assets/images/shorts.jpeg';
-import sneakerIcon from '../assets/images/sneaker.png';
+import myIcons from '../MyIcons';
 import Axios from 'axios';
 import '../styles/ProductFrame.css'
+import product from '../utils/Products.js';
+import { useNavigate } from 'react-router-dom';
 
 // AUTHOR(s): Justin Cote
 // HOME VIEW
 // Provides the landing page of the website
 // This is where a user can view and search for products
+var viewProduct = null;
+function updateViewProduct(value){
+    viewProduct = value;
+}
 
 const iconSelect = {
-    'jersey': jerseyIcon
+    'jersey': myIcons.getJerseyIcon()
 }
-const temp_prods = {
-    product:
+const temp_prods = 
         [
             {
                 id: 1,
@@ -28,44 +28,40 @@ const temp_prods = {
                 Price: null,
                 fname: null,
                 lname: null,
-                color: null
+                color: null,
+                title: null
             }
-        ]
-}
+        ];
+
 const WEBFRAME = () => {
+    const navigate = useNavigate();
     const [productsInView, setProducts] = useState(temp_prods);
-    const [productView, setProductView] = useState(false);
     const loadProducts = async () => {
-        try {
-            const response = await Axios.get('http://localhost:3004/db/jerseys');
-            setProducts(response.data);
-        } catch (error) {
-            console.error('Error Fetching products:', error);
+        const response = await product.getJerseys();
+        if (response.status){
+            setProducts(product.products);
+        }else{
+            console.error('Error Fetching Jerseys:', response.error);
         }
     }
 
     useEffect(() => {
         loadProducts();
     }, []);
-    function queryWithFilter(data) {
-        // contact DB
-        // data represents what boxes are selected to sort and filter 
-        // this will be argument for a call to the backend
-        // use setProducts to update product list whenever new filter is selected
-    }
 
-    function navigateToProduct(id) {
-
+    function navigateToProduct(product) {
+        viewProduct = product;
+        navigate('/home/product')
     }
 
     return (
         <div>
-            <SideBar callbackQuery={queryWithFilter} />
+            <SideBar callbackQuery={()=>{}} />
             {/* product frame */}
             <div className="sub-page">
                 <div className="product-items">
-                    {productsInView.product.map((product) => (
-                        <div key={product.product_ID || product.id} className="product-item">
+                    {productsInView.map((product) => (
+                        <div key={product.product_ID || product.id} onClick={()=>navigateToProduct(product)} className="product-item">
                             <div className="product-image">
                                 <img
                                     src={iconSelect[product.title]}
@@ -99,4 +95,4 @@ const WEBFRAME = () => {
     );
 }
 
-export default WEBFRAME;
+export {viewProduct, WEBFRAME, updateViewProduct};

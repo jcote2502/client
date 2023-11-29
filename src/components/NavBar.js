@@ -15,21 +15,22 @@ class NavBar extends React.Component {
         super();
         this.isSignedIn = false;
         this.fname = null;
-        this.uid = null;
     }
-    handleSignup = async (uid, fname) => {
+    handleLogin = (fname) => {
         this.isSignedIn = true;
-        this.uid = uid;
         this.fname = fname;
     };
+
+    handleLogOut = () => {
+        this.isSignedIn = false;
+        this.fname = null;
+    }
 
     getUid = () => {
         return this.uid
     }
 
     render() {
-        console.log(this.fname);
-        console.log(this.isSignedIn);
         return (
             <nav className="navbar">
                 <HomeButton />
