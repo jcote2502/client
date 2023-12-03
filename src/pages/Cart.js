@@ -15,7 +15,7 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
 
   const getImage = (product) => {
-
+      console.log(product);
       switch (product.title) {
 
           // single shirt image
