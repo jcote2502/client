@@ -24,7 +24,7 @@ function Copyright(props) {
   );
 }
 
-export default function SignUp({navbar}) {
+export default function SignUp(props) {
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -32,8 +32,8 @@ export default function SignUp({navbar}) {
     const response = await user.createUser(email.value,firstName.value,
       lastName.value, password.value);
     if (response.status){
-      navbar.handleLogin(user.user.fname);
-      navigate('/home/webframe');
+      props.handleLogin({loggedIn:true,fname:user.user.fname})
+      navigate('/shop');
     }else{
       console.error('Error Creating Account:',response.error);
     }

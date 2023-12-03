@@ -4,7 +4,8 @@ import '../styles/Cart.css';
 import { useNavigate } from 'react-router-dom';
 import cart from '../utils/Cart';
 import user from '../utils/User';
-// AUTHOR(s): Justin Cote, Liam Garrett
+
+// AUTHOR(s): Justin Cote 
 // Displays all items currently in cart
 // Used to checkout, remove items , or clear cart
 
@@ -13,10 +14,36 @@ const Cart = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
 
+  const getImage = (product) => {
+
+      switch (product.title) {
+
+          // single shirt image
+          case 'shirts':
+              return myIcons.getShirtIcon();
+          // check if joggers or shorts
+          case 'pants':
+              if (product.details === 'joggers') {
+                  return myIcons.getJoggersIcon();
+              } else {
+                  return myIcons.getShortIcon();
+              }
+          // check if sneakers or sandals
+          case 'shoes':
+              if (product.details === 'sandals') {
+                  return myIcons.getSandalIcon();
+              } else {
+                  return myIcons.getSneakerIcon();
+              }
+          case 'jersey':
+              return myIcons.getJerseyIcon();
+          default:
+              return null;
+      }
+  }
   const loadCart = async () => {
     const response = await cart.getCart(user.user_ID);
     if (response.status) {
-      console.log(cart.items);
       setCartItems(cart.items);
     } else {
       console.error('Error Fetching Cart:', response.error);
@@ -49,7 +76,8 @@ const Cart = () => {
 
   // Handles Purchasing Cart
   const handleCheckoutClick = async () => {
-    const response = await cart.purchaseCart(user.user_ID);
+    const IDs = cart.getIDs();
+    const response = await cart.purchaseCart(user.user_ID,IDs);
     if (response.status) {
       console.log('Successfully Purchased');
       const clearCart = await cart.clearCart(user.user_ID);
@@ -75,11 +103,12 @@ const Cart = () => {
 
   return (
     <div className="cart-container">
-      <div className="product-list">
-        {cartItems.map((item) => (
+        {
+        cartItems.length > 0 ?
+        cartItems.map((item) => (
           <div key={item.cart_ID}>
-            <div className="product-container" onClick={() => handleContainerClick(item.product_ID)}>
-              <img className="product-image" src={item.img} alt={item.title} />
+            <div className="cart-product-container" onClick={() => handleContainerClick(item.product_ID)}>
+              <img className="product-image" src={getImage(item)} alt={item.title} />
               <div className="product-details">
                 <h3>{item.name}</h3>
                 <p>{`Size: ${item.size} | Price: $${item.Price} | Color: ${item.color}`}</p>
@@ -88,8 +117,7 @@ const Cart = () => {
             </div>
             <button className="remove-item" onClick={() => handleRemoveItemClick(item.cart_ID)}>X</button>
           </div>
-        ))}
-      </div>
+        )):<h1>No Items In Cart</h1>}
       <div className="cart-summary">
         <div className="total">Total: ${calculateTotalPrice()}</div>
         <div className="buttons">

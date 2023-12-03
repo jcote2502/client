@@ -22,6 +22,7 @@ class User{
             });
             this.user_ID = uid;
             this.user = user.data.user;
+            console.log(this.user);
             return {status:true};
     }catch(error){
         console.log('Error Logging In:',error);
@@ -65,10 +66,23 @@ class User{
             return {status:false,error:error.message};
         }
     }
-    logout(){
-       this.user_ID=null;
-       this.user=null; 
+
+    async updateUser(address,team){
+        try{
+            Axios.post('http://localhost:3004/db/updateProfile',{
+                uid:this.user_ID,
+                team:team,
+                address:address
+            });
+            this.user.team = team;
+            this.user.pr_address = address;
+            return {status:true};
+        }catch(error){
+            console.error('Error Updating User',error);
+            return {status:false,error:error.message};
+        }
     }
+
     getUserID(){
         return this.user_ID;
     }

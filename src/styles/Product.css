@@ -1,22 +1,21 @@
 .product-container {
+  position: fixed;
+  top: 65px;
+  left: 275px;
+  right: 0;
+  height: calc(100vh - 65px);
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 90px);
+  font-size: 16px;
 }
 
-.top-row{
-  display: flex;
-  flex-direction: row;
-  align-items: start;
-  justify-content: center;
-}
 
-.product-image {
+.product-image-view {
   width: 350px;
   height: 350px;
 }
 
-.product-details {
+.product-details-view {
   font-size: 14px;
   flex-direction: column;
 }

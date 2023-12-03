@@ -39,11 +39,12 @@ class Cart {
         }
     }
 
-    async purchaseCart(uid) {
+    async purchaseCart(uid,IDs) {
         if (this.items.length > 0) {
             try {
                 await Axios.post('http://localhost:3004/db/purchase', {
-                    uid: uid
+                    uid: uid,
+                    product_IDS:IDs
                 });
                 return { status: true };
             } catch (error) {
@@ -78,6 +79,17 @@ class Cart {
             console.error("Failed to clear cart:", error);
             return { status: false, error: error.message };
         }
+    }
+    getIDs(){
+        console.log(this.items)
+        const IDs = [null,null,null];
+        for (let i = 0 ; i<3 ; i++){
+            if (this.items[i]){
+                IDs[i] = this.items[i].product_ID;
+            }
+        }
+        console.log(IDs);
+        return IDs
     }
 }
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import SideBar from '../components/SideBar';
-import myIcons from '../MyIcons';
-import Axios from 'axios';
+import SideBar from '../Components/SideBar.js';
+import myIcons from '../MyIcons.js';
 import '../styles/ProductFrame.css'
 import product from '../utils/Products.js';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +15,12 @@ function updateViewProduct(value){
 }
 
 const iconSelect = {
-    'jersey': myIcons.getJerseyIcon()
+    'jersey': myIcons.getJerseyIcon(),
+    'shirts': myIcons.getShirtIcon(),
+    'joggers': myIcons.getJoggersIcon(),
+    'sneakers': myIcons.getSneakerIcon(),
+    'sandals': myIcons.getSandalIcon(),
+    'shorts': myIcons.getShortIcon()
 }
 const temp_prods = 
         [
@@ -25,7 +29,7 @@ const temp_prods =
                 // image: 'http'
                 gender: null,
                 player: null,
-                Price: null,
+                price: null,
                 fname: null,
                 lname: null,
                 color: null,
@@ -45,26 +49,37 @@ const WEBFRAME = () => {
         }
     }
 
+    const refreshPage = () => {
+        setProducts(product.products);
+    }
+
     useEffect(() => {
         loadProducts();
     }, []);
 
-    function navigateToProduct(product) {
-        viewProduct = product;
-        navigate('/home/product')
+    function navigateToProduct(item) {
+        viewProduct = item;
+        navigate('/product')
     }
 
     return (
         <div>
-            <SideBar callbackQuery={()=>{}} />
+            <SideBar callbackRender={refreshPage} />
             {/* product frame */}
             <div className="sub-page">
                 <div className="product-items">
-                    {productsInView.map((product) => (
+                    {
+                    product.products.length == 0 ? 
+
+                    <p>No Results</p> :
+                    
+                    product.products.map((product) => (
                         <div key={product.product_ID || product.id} onClick={()=>navigateToProduct(product)} className="product-item">
                             <div className="product-image">
                                 <img
-                                    src={iconSelect[product.title]}
+                                    src={
+                                        product.title == 'jersey' || product.title == 'shirts' ?
+                                        iconSelect[product.title]:iconSelect[product.details]}
                                     alt="Product"
                                     onClick={() => navigateToProduct(product.id)}
                                 />
@@ -79,12 +94,13 @@ const WEBFRAME = () => {
                                     {product.lname ? product.lname + '\n' : null}
                                 </div>
                                 <div className='product-row'>
+                                    {product.team + ' '}
                                     {product.title}
                                     {', '}
                                     {product.color}
                                 </div>
                                 <div className='product-row'>
-                                    <b>${product.Price}</b>
+                                    <b>${product.price}</b>
                                 </div>
                             </div>
                         </div>

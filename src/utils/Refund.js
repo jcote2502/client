@@ -3,12 +3,11 @@ import Axios from 'axios';
 class Refund{
     constructor(){
         this.refunds = [];
-        this.refund = {};
     }
     
     async getRefunds(uid){
         try{
-            const response = Axios.get('http://localhost:3004/db/refund',{
+            const response = await Axios.get('http://localhost:3004/db/refund',{
                 params:{
                     uid:uid
                 }
@@ -21,9 +20,18 @@ class Refund{
         }
     }
 
-
-    setRefund(refund){
-        this.refund = refund;
+    async postRefund(uid,pid,tid){
+        try{
+            await Axios.post('http://localhost:3004/db/addRefund',{
+                uid:uid,
+                pid:pid,
+                tid:tid
+            });
+            return{status:true};
+        }catch(error){
+            console.error('Error Posting Refund:',error);
+            return {status:false,error:error.message};
+        }
     }
 }
 

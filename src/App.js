@@ -1,46 +1,44 @@
-import './App.css';
-import NavBar from './components/NavBar';
-import { Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import Account from './pages/Account';
-import Cart from './pages/Cart';
-import Signup from './pages/SignUp';
-import Login from './pages/Login';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Welcome from './pages/Welcome';
-import Product from './components/Product';
-import {WEBFRAME} from './pages/Search';
-
-// CREATES ROUTES FOR PAGES 
-// SETS UP REDUX IN CASE
-// USES DEFAULT THEME PROVIDER
+import { useState } from 'react';
+import NavBar from './Components/NavBar';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Account from './Pages/Account';
+import Cart from './Pages/Cart';
+import Signup from './Pages/SignUp';
+import Login from './Pages/Login';
+import Product from './Components/Product';
+import { WEBFRAME } from './Pages/Search';
 
 function App() {
-  const defaultTheme = createTheme();
-  const navBar = new NavBar();
+
+  const [user, setUser] = useState({ loggedIn: false, fname: '' });
+
+  const handleLogin = (userData) => {
+    setUser(userData);
+  };
+
+  const handleLogout = () => {
+    setUser({ loggedIn: false, fname: '' });
+  };
 
   return (
-    <ThemeProvider theme={defaultTheme} >
-        {
-          <Routes>
-            {/* set up welcome page route for '/' */}
-            <Route path='/' element={<Welcome />} />
-            <Route path="home" element={<Home navBar={navBar} />}>
-              <Route index element={<WEBFRAME />} />
-              <Route path='account' element={<Account />} />
-              <Route path='cart' element={<Cart />} />
-              <Route path='webframe' element={<WEBFRAME />} />
-              <Route path='product' element={<Product/>} />
-            </Route>
-            <Route path='login' element={<Login navbar={navBar} />} />
-            <Route path='signUp' element={<Signup navbar={navBar} />} >
-              {/* <Route path='signUp/info' element={<SignupInfo />} /> */}
-
-            </Route>
-          </Routes>
-        }
-    </ThemeProvider>
+    <>
+      {
+        <Router>
+            <NavBar user={user} />
+            <Routes>
+              <Route path='/' element={<WEBFRAME />} />
+              <Route path='/shop' element={<WEBFRAME />} />
+              <Route path='/account' element={<Account handleLogout={handleLogout} />} />
+              <Route path='/login' element={<Login handleLogin={handleLogin} />} />
+              <Route path='/cart' element={<Cart />} />
+              <Route path='signUp' element={<Signup handleLogin={handleLogin} />} />
+              <Route path="/product" element={<Product />}>
+                <Route path=':productID' element={<Product />} />
+              </Route>
+            </Routes>
+        </Router>
+      }
+    </>
   );
 }
-
 export default App;

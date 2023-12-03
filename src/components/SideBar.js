@@ -1,52 +1,52 @@
 import React from "react";
 import '../styles/SideBar.css'
 import { TextField } from "@mui/material";
-
+import product from "../utils/Products";
 
 // AUTHOR: Justin Cote
 // SIDEBAR COMPONENT
 // controls the sidebar and search filters for product view
 
 class SideBar extends React.Component {
-    constructor(callbackQuery) {
-        super();
-        this.callbackQuery = callbackQuery;
+    constructor(props) {
+        super(props);
+        this.callbackRender = this.props.callbackRender;
         this.state = {
             expanded: true,
-            view: 'product',
-            filters: {
-                size: {
-                    small: false,
-                    medium: false,
-                    large: false,
-                },
-                productType: {
-                    shoes: false,
-                    shirts: false,
-                    pants: false,
-                    jerseys: false,
-                },
-                gender: {
-                    male: false,
-                    female: false,
-                },
-                price: null,
-            }
+            searchInput: '',
         };
-        this.views = [
-            'product',
-            'account',
-        ]
     }
 
-    // handle any kind of filter update
-    handleRequestQuery = () => {
-        this.callbackQuery()
-        console.log('Callback function complete');
+    // will handle the search
+    handleSearchQuery = async () => {
+        const searchTerm = (document.getElementById('searchBar').value).trim();
+        const words = searchTerm.split(/\s+/);
+        // search team (eagles)
+        if (words.length == 1){
+            const word = words[0].charAt(0).toUpperCase()+words[0].slice(1);
+            console.log(word);
+            const response = await product.searchTeam(word);
+            if (response.status){
+                console.log(product.products);
+            }else{
+                console.error('Error Fetching Team:', response.error);
+            }
+        }
+        // player (jalen hurts)
+        else if (words.length==2){
+            const fname = words[0].charAt(0).toUpperCase()+words[0].slice(1);
+            const lname = words[1].charAt(0).toUpperCase()+words[1].slice(1);
+            console.log(fname, lname);
+            const response = await product.searchPlayer(fname,lname);
+            if (response.status){
+                console.log(product.products);
+            }else{
+                console.error('Error Fetching Team:', response.error);
+            }
+        }
+        this.callbackRender();
     }
 
-    // handles viewChange
-    handleViewChange = (newView) => { this.setState({ view: { newView } }); }
 
     // toggles sidebar
     toggleSideBar = () => {
@@ -55,30 +55,9 @@ class SideBar extends React.Component {
         }));
     }
 
-    // Handles checkbox changes
-    handleCheckboxChange = (filterCategory, filterName) => {
-        this.setState((prevState) => {
-            const newFilters = {
-                ...prevState.filters,
-                [filterCategory]: {
-                    ...prevState.filters[filterCategory],
-                    [filterName]: !prevState.filters[filterCategory][filterName]
-                }
-            };
-            return { filters: newFilters };
-        });
-    };
-
-
-    // Handles price dropdown change
-    handlePriceChange = (event) => {
-        this.setState({ filters: { ...this.state.filters, price: event.target.value } });
-    };
-
-
     // Renders Element
     render() {
-        const { expanded , filters } = this.state;
+        const { expanded } = this.state;
         return (
             // expand button
             <div className={`sidebar ${expanded ? 'expanded' : 'collapsed'}`}>
@@ -87,7 +66,7 @@ class SideBar extends React.Component {
                 </div>
 
                 {/* if expanded and view is selected for product filters */}
-                {this.state.view === 'product' && expanded && (
+                {expanded && (
                     <div className="filters">
                         
                         {/* Search Bar */}
@@ -99,76 +78,32 @@ class SideBar extends React.Component {
                             name="searchBar"
                             />
                         </div>
-                        <button style={{marginLeft:"100px"}}>Search</button>
-                        {/* Product Filter */}
-                        <div className="filter-section">
-                            <h3>Product Type:</h3>
-                            <Checkbox
-                                label='Jerseys' id='jerseys'
-                                value={filters.productType.jerseys}
-                                onChange={()=>this.handleCheckboxChange('productType', 'jerseys')}
-                            />
-                            <Checkbox
-                                label='Shirts' id='shirts'
-                                value={filters.productType.shirts}
-                                onChange={()=>this.handleCheckboxChange('productType', 'shirts')}
-                            />
-                            <Checkbox
-                                label='Pants' id='pants'
-                                value={filters.productType.pants}
-                                onChange={()=>this.handleCheckboxChange('productType', 'pants')}
-                            />
-                            <Checkbox
-                                label='Shoes' id='shoes'
-                                value={filters.productType.shoes}
-                                onChange={()=>this.handleCheckboxChange('productType', 'shoes')}
-                            />
+                        <button onClick={()=>this.handleSearchQuery()} style={{marginLeft:"100px"}}>Search</button>
+                        <div style={{padding:'15px 5px 3px 10px'}}>
+                            Welcome to NFL FanGearShop. To search for items there are some restrictions that you must follow to get 
+                            real results.
                         </div>
-
-                        {/* Size Filter */}
-                        <div className="filter-section">
-                            <h3>Size:</h3>
-                            <Checkbox
-                                label='Small' id='small'
-                                value={filters.size.small}
-                                onChange={()=>this.handleCheckboxChange('size', 'small')}
-                            />
-                            <Checkbox
-                                label='Medium' id='medium'
-                                value={filters.size.medium}
-                                onChange={()=>this.handleCheckboxChange('size', 'medium')}
-                            />
-                            <Checkbox
-                                label='Large' id='large'
-                                value={filters.size.large}
-                                onChange={()=>this.handleCheckboxChange('size', 'large')}
-                            />
+                        <div style={{padding:'3px 5px 3px 10px'}}>
+                            You can search for teams and players.
                         </div>
-
-                        {/* Gender Filter */}
-                        <div className="filter-section">
-                            <h3>Gender:</h3>
-                            <Checkbox
-                                label='Male' id='male'
-                                value={filters.gender.male}
-                                onChange={()=>this.handleCheckboxChange('gender', 'male')}
-                            />
-                            <Checkbox
-                                label='Female' id='female'
-                                value={filters.gender.female}
-                                onChange={()=>this.handleCheckboxChange('gender', 'female')}
-                            />
+                        <div style={{padding:'3px 5px 3px 10px'}}>
+                            When Searching a team make sure to make it plural. For example Eagles instead of Eagle.
                         </div>
-
-                        <div className="filter-section">
-                            <h3>Price:</h3>
-                            <select value={filters.price || ''} id='price' onChange={this.handlePriceChange}>
-                                <option value="none">None</option>
-                                <option value="hi-lo">High to Low</option>
-                                <option value="lo-hi">Low to High</option>
-                            </select>
+                        <div style={{padding:'3px 5px 3px 10px'}}>
+                            When Searching for a player make sure to include a space and spell their name completely right or the search will fail.
                         </div>
-
+                        <div style={{padding:'3px 5px 3px 10px'}}>
+                            We have just under 4,000 products generated for our site. 100 different NFL players that are included in those products as well.
+                        </div>
+                        <div style={{padding:'3px 5px 3px 10px'}}>
+                            We limited the number of items that can be added to your cart at one time to three. This is only to keep the project simple.
+                        </div>
+                        <div style={{padding:'3px 5px 3px 10px'}}>
+                            None of the transactions that occur on our site are legitimate. 
+                        </div>
+                        <div style={{padding:'3px 5px 3px 10px'}}>
+                            Happy Shopping !
+                        </div>
                     </div>
                 )}
             </div>
@@ -176,19 +111,4 @@ class SideBar extends React.Component {
     }
 }
 
-// checkbox object used in render
-const Checkbox = ({ label, value, id, onChange }) => {
-
-    return (
-        <>
-            <input
-                type="checkbox"
-                id={id}
-                checked={value}
-                onChange={onChange}
-            />
-            <label htmlFor={id}>{label}</label>
-        </>
-    )
-}
 export default SideBar;

@@ -1,76 +1,74 @@
 .sub-page {
-    position: fixed;
-    top: 65px;
-    left: 275px;
-    right: 0;
-    height: calc(100vh - 65px);
-    overflow-y: auto; /* To enable scrolling if content overflows */
-    align-items: center;
-    
-  }
-  
-  /* CSS for each product item */
-  /* CSS for the product items container */
-.product-items {
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap; /* Allow items to wrap to new rows when they don't fit */
-  }
-  
-  /* CSS for each product item */
-  .product-item {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #ddd;
-    margin-right: 20px; /* Add margin to create space between items */
-    margin-bottom: 20px;
-    padding: 4.5px;
-    height: 165px;
-    width: 145px;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  /* CSS for the product image */
-  .product-image img {
-    width: 95px;
-    height: 110px;
-    cursor: pointer;
-  }
-  
-  
-  /* CSS for product details */
-  .product-details {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 145px;
-    padding-right: 30px;
-  }
+  position: fixed;
+  top: 65px;
+  left: 275px;
+  right: 0;
+  height: calc(100vh - 65px);
+  overflow-y: auto;
+  align-items: center;
+}
 
-  .product-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-  }
-  
-  /* CSS for labels (gender, playerName, productType) */
-  .labels {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .label {
-    margin-right: 10px;
-  }
-  
-  /* CSS for Price and In Stock */
-  .price {
-    margin-top: 10px;
-  }
-  
-  .in-stock {
-    margin-top: 10px;
-    font-weight: bold;
-  }
+.product-items {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.product-item {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+  height: 165px;
+  width: 145px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CSS for the product image */
+.product-image img {
+  width: 100px;
+  height: 110px;
+  cursor: pointer;
+  padding-bottom: 10px;
+}
+
+
+/* CSS for product details */
+.product-details {
+  padding-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 145px;
+  padding-right: 30px;
+}
+
+.product-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+/* CSS for labels (gender, playerName, productType) */
+.labels {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.label {
+  margin-right: 10px;
+}
+
+/* CSS for Price and In Stock */
+.price {
+  margin-top: 10px;
+}
+
+.in-stock {
+  margin-top: 10px;
+  font-weight: bold;
+}

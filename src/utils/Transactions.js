@@ -7,11 +7,15 @@ class Transactions{
         this.product = {};
     }
 
-    async getTransactions(uid){
+    async getTransactions(uid,sort_filter){
+        if (!sort_filter){
+            sort_filter='DESC'
+        }
         try{
             const response = await Axios.get('http://localhost:3004/db/transactions',{
                 params:{
-                    uid:uid
+                    uid:uid,
+                    sort_filter:sort_filter
                 }
             });
             this.transactions = response.data.transactions;
@@ -29,10 +33,10 @@ class Transactions{
                 pid:userID,
                 tid:transID, 
             });
-            return true;
+            return {status:true};
         }catch(error){
             console.error('Error Adding Refund',error);
-            return error;
+            return {status:false,error:error.message};
         }
     }
 

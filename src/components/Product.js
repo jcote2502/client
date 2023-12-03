@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import myIcons from '../MyIcons';
 import '..//styles/Product.css';
-import { viewProduct } from '../pages/Search';
+import { viewProduct } from '../Pages/Search';
 import user from '../utils/User';
 import cart from '../utils/Cart';
 import { useNavigate } from 'react-router-dom';
@@ -13,69 +13,72 @@ const Product = () => {
     const [image, setImage] = useState(myIcons.getJerseyIcon());
 
     const getImage = () => {
+
         switch (product.title) {
-            case 'longsleeve':
+
+            // single shirt image
+            case 'shirts':
                 setImage(myIcons.getShirtIcon());
                 break;
-            case 'shortsleeve':
-                setImage(myIcons.getShirtIcon());
+            // check if joggers or shorts
+            case 'pants':
+                if (product.details === 'joggers') {
+                    setImage(myIcons.getJoggersIcon());
+                } else {
+                    setImage(myIcons.getShortIcon());
+                }
                 break;
-            case 'joggers':
-                setImage(myIcons.getJoggersIcon());
-                break;
-            case 'shorts':
-                setImage(myIcons.getShortIcon());
-                break;
-            case 'sneakers':
-                setImage(myIcons.getSneakerIcon());
-                break;
-            case 'sandals':
-                setImage(myIcons.getSandalIcon());
+            // check if sneakers or sandals
+            case 'shoes':
+                if (product.details === 'sandals') {
+                    setImage(myIcons.getSandalIcon());
+                } else {
+                    setImage(myIcons.getSneakerIcon());
+                }
                 break;
             case 'jersey':
-                const img = myIcons.getJerseyIcon();
-                setImage(img);
+                setImage(myIcons.getJerseyIcon());
                 break;
+            default:
+                setImage(null);
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getImage();
-    },[]);
+    });
 
-    const handleAddToCart = async (productID) =>{
+    const handleAddToCart = async (productID) => {
         console.log(user.user_ID);
-        if (user.user_ID == null){
+        if (user.user_ID == null) {
             alert('Sign In or Create Account To Use Cart and Purchase');
             return;
-        }else{
-            const response = await cart.addItem(productID,user.user_ID);
-            if (response.status){
+        } else {
+            const response = await cart.addItem(productID, user.user_ID);
+            if (response.status) {
                 console.log('success');
-                navigate('/home/cart');
-            }else{
-                console.error('Error Adding Item:',response.error);
+                navigate('/cart');
+            } else {
+                console.error('Error Adding Item:', response.error);
             }
-            
+
         }
     }
 
     return (
         <div className="product-container">
-            <div className="top-row">
-                <img src={image} alt="Product" className='product-image' />
-                <div className="product-details">
-                    <p className="title">{product.title}</p>
-                    {product.details ? <p className="details">{product.details}</p> : 
+            <div className="product-details-view">
+            <img src={image} alt="Product" className='product-image-view' />
+                <p className="title">{product.title}</p>
+                {product.details ? <p className="details">{product.details}</p> :
                     <span>
                         <p className='details'>{product.fname + ' ' + product.lname}</p>                    </span>
-                    }
-                    <p className="size">Size: {product.size}</p>
-                    <p className="gender">Gender: {product.gender}</p>
-                    <p className="color">Color: {product.color}</p>
-                    <p className="price">Price: ${product.Price}</p>
-                    <button onClick={()=>handleAddToCart(product.product_ID)}>add to cart</button>
-                </div>
+                }
+                <p className="size">Size: {product.size}</p>
+                <p className="gender">Gender: {product.gender}</p>
+                <p className="color">Color: {product.color}</p>
+                <p className="price">Price: ${product.price}</p>
+                <button onClick={() => handleAddToCart(product.product_ID)}>add to cart</button>
             </div>
         </div>
     );

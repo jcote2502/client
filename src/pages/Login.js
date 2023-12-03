@@ -9,7 +9,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Axios from 'axios';
 import user from '../utils/User';
 
 
@@ -29,15 +28,15 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function Login({navbar}) {
+export default function Login(props) {
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const {email, password} = event.currentTarget;
     const response = await user.login(email.value, password.value);
     if (response.status) {
-      navbar.handleLogin(user.user.fname);
-      navigate('/home/webframe');
+      props.handleLogin({loggedIn:true,fname:user.user.fname});
+      navigate('/shop');
     }else{
       console.error('Error Loggin In:',response.error);
       alert(response.error);

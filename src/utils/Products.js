@@ -29,6 +29,8 @@ class Product{
             return {status:true};
         }catch(error){
             console.error('Error Fetching products:',error);
+            const dialogue = `Cannot Find Products for ${fname} ${lname}.`;
+            alert(dialogue)
             return {status:false,error:error.message};
         }
     }
@@ -44,6 +46,8 @@ class Product{
             return {status:true};
         }catch(error){
             console.error('Error Fetching Products',error);
+            const dialogue = `Cannot Find Products for ${team}.`;
+            alert(dialogue)
             return {status:false,error:error.message};
         }
     }
@@ -51,6 +55,7 @@ class Product{
     setProduct (product){
         this.product = product;
     }
+
 }
 
 const product = new Product();
