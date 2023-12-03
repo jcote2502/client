@@ -22,7 +22,7 @@ class SideBar extends React.Component {
         const searchTerm = (document.getElementById('searchBar').value).trim();
         const words = searchTerm.split(/\s+/);
         // search team (eagles)
-        if (words.length == 1){
+        if (words.length === 1){
             const word = words[0].charAt(0).toUpperCase()+words[0].slice(1);
             console.log(word);
             const response = await product.searchTeam(word);
@@ -33,7 +33,7 @@ class SideBar extends React.Component {
             }
         }
         // player (jalen hurts)
-        else if (words.length==2){
+        else if (words.length===2){
             const fname = words[0].charAt(0).toUpperCase()+words[0].slice(1);
             const lname = words[1].charAt(0).toUpperCase()+words[1].slice(1);
             console.log(fname, lname);
@@ -79,8 +79,20 @@ class SideBar extends React.Component {
                             />
                         </div>
                         <button onClick={()=>this.handleSearchQuery()} style={{marginLeft:"100px"}}>Search</button>
-                        <div style={{padding:'15px 5px 3px 10px'}}>
-                            Welcome to NFL FanGearShop. To search for items there are some restrictions that you must follow to get 
+                        <div style={{padding:'15px 5px 3px 10px', fontSize:'20px'}}>
+                            READ ME BEFORE USING
+                        </div>
+                        <div style={{padding:'3px 5px 3px 10px'}}>
+                            Welcome to NFL FanGearShop.
+                        </div>
+                        <div style={{padding:'3px 5px 3px 10px'}}>
+                           To navigate home you can click the nfl logo in the top left.
+                        </div>
+                        <div style={{padding:'3px 5px 3px 10px'}}>
+                            To logout just refresh the page.
+                        </div>
+                        <div style={{padding:'3px 5px 3px 10px'}}>
+                            To search for items there are some restrictions that you must follow to get 
                             real results.
                         </div>
                         <div style={{padding:'3px 5px 3px 10px'}}>
