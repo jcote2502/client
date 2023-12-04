@@ -69,16 +69,16 @@ const WEBFRAME = () => {
             <div className="sub-page">
                 <div className="product-items">
                     {
-                    product.products.length == 0 ? 
+                    product.products.length === 0 ? 
 
                     <p>No Results</p> :
                     
-                    product.products.map((product) => (
+                    productsInView.map((product) => (
                         <div key={product.product_ID || product.id} onClick={()=>navigateToProduct(product)} className="product-item">
                             <div className="product-image">
                                 <img
                                     src={
-                                        product.title == 'jersey' || product.title == 'shirts' ?
+                                        product.title === 'jersey' || product.title === 'shirts' ?
                                         iconSelect[product.title]:iconSelect[product.details]}
                                     alt="Product"
                                     onClick={() => navigateToProduct(product.id)}
