@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import NavBar from './components/NavBar.js';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Account from './Pages/Account.js';
-import Cart from './Pages/Cart.js';
-import Signup from './Pages/SignUp.js';
-import Login from './Pages/Login.js';
+import Account from './pages/Account.js';
+import Cart from './pages/Cart.js';
+import Signup from './pages/SignUp.js';
+import Login from './pages/Login.js';
 import Product from './components/Product.js';
-import { WEBFRAME } from './Pages/Search.js';
+import { WEBFRAME } from './pages/Search.js';
 
 function App() {
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import myIcons from '../MyIcons';
 import '..//styles/Product.css';
-import { viewProduct } from '../Pages/Search';
+import { viewProduct } from '../pages/Search';
 import user from '../utils/User';
 import cart from '../utils/Cart';
 import { useNavigate } from 'react-router-dom';
