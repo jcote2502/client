@@ -1,9 +1,9 @@
-import jerseyIcon from './Components/Assets/images/jersey.jpeg';
-import joggersIcon from './Components/Assets/images/joggers.jpeg';
-import sandalIcon from './Components/Assets/images/sandal.png';
-import shirtIcon from './Components/Assets/images/shirt.png';
-import shortIcon from './Components/Assets/images/shorts.jpeg';
-import sneakerIcon from './Components/Assets/images/sneaker.png';
+import jerseyIcon from './components/Assets/images/jersey.jpeg';
+import joggersIcon from './components/Assets/images/joggers.jpeg';
+import sandalIcon from './components/Assets/images/sandal.png';
+import shirtIcon from './components/Assets/images/shirt.png';
+import shortIcon from './components/Assets/images/shorts.jpeg';
+import sneakerIcon from './components/Assets/images/sneaker.png';
 
 
 class MyIcons {

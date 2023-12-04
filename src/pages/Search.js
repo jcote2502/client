@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import SideBar from '../Components/SideBar.js';
+import SideBar from '../components/SideBar.js';
 import myIcons from '../MyIcons.js';
 import '../styles/ProductFrame.css'
 import product from '../utils/Products.js';
