@@ -45,7 +45,7 @@ function CartButton() {
         navigate("cart");
     }
     return (
-        <img className="logo" onClick={() => goToCart()} src={cartIcon} />
+        <img className="logo" onClick={() => goToCart()} src={cartIcon} alt="Logo" />
     );
 }
 function AccountButton() {
@@ -54,7 +54,7 @@ function AccountButton() {
         navigate("account");
     }
     return (
-        <img className="logo" onClick={() => goToAccount()} src={profileIcon} />
+        <img className="logo" onClick={() => goToAccount()} src={profileIcon} alt="Logo"/>
     );
 }
 function Navigation() {

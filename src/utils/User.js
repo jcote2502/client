@@ -53,19 +53,6 @@ class User{
             return {status:false,error:error.message};
         }
     }
-    async deleteUser(){
-        try{
-            const response = await Axios.post('http://localhost:3004/db/deleteAccount', {
-                user_ID: this.user_ID
-            });
-            this.user_ID=null;
-            this.user=null;
-            return {status:true};
-        }catch(error){
-            console.log("Error Deleting User:",error);
-            return {status:false,error:error.message};
-        }
-    }
 
     async updateUser(address,team){
         try{

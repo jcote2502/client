@@ -68,7 +68,7 @@ const Profile = () => {
   const [team, setTeam] = useState('');
   const [address, setAddress] = useState('');
   const updateUser = async () => {
-    const response = await user.updateUser(team, address);
+    const response = await user.updateUser(address,team);
     if (response.status) {
       setThisUser(user.getUser());
       setTeam('');
